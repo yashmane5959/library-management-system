@@ -1,0 +1,5 @@
+[
+  { "id": 1, "title": "The Pragmatic Programmer", "author": "David Thomas", "isbn": "9780135957059", "available": true, "borrowed_by": null },
+  { "id": 2, "title": "Clean Code", "author": "Robert C. Martin", "isbn": "9780132350884", "available": true, "borrowed_by": null },
+  { "id": 3, "title": "To Kill a Mockingbird", "author": "Harper Lee", "isbn": "9780061120084", "available": true, "borrowed_by": null }
+]

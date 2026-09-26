@@ -1,0 +1,69 @@
+{% extends "base.html" %} {% block title %}Members | Shelf{% endblock %} {%
+block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">PEOPLE</p>
+    <h1>Members</h1>
+    <p class="muted">Maintain the list of people who can borrow books.</p>
+  </div>
+</section>
+<section class="content-grid">
+  <section class="panel form-panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">NEW RECORD</p>
+        <h2>Add a member</h2>
+      </div>
+      <span class="panel-index">01</span>
+    </div>
+    <form method="post" class="stack-form">
+      <label for="member-name">Member name</label>
+      <input
+        id="member-name"
+        name="name"
+        type="text"
+        maxlength="120"
+        placeholder="Enter a full name"
+        required
+      />
+      <button class="button" type="submit">
+        Add member <span aria-hidden="true">+</span>
+      </button>
+    </form>
+  </section>
+  <section class="panel table-panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">DIRECTORY</p>
+        <h2>
+          All members <span class="count-pill">{{ members|length }}</span>
+        </h2>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Member ID</th>
+            <th>Member name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for member in members %}
+          <tr>
+            <td class="id-cell">MB-{{ "%03d"|format(member.id) }}</td>
+            <td class="name-cell">{{ member.name }}</td>
+          </tr>
+          {% else %}
+          <tr>
+            <td class="empty-cell" colspan="2">
+              No members yet. Add the first member using the form.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>
+{% endblock %}

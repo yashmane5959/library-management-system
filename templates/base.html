@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Shelf Library{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="{{ url_for('home') }}">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span>Shelf <small>LIBRARY DESK</small></span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a
+            class="nav-link {% if request.endpoint == 'home' %}active{% endif %}"
+            href="{{ url_for('home') }}"
+            ><span>01</span> Dashboard</a
+          >
+          <a
+            class="nav-link {% if request.endpoint == 'books' %}active{% endif %}"
+            href="{{ url_for('books') }}"
+            ><span>02</span> Books</a
+          >
+          <a
+            class="nav-link {% if request.endpoint == 'members' %}active{% endif %}"
+            href="{{ url_for('members') }}"
+            ><span>03</span> Members</a
+          >
+          <a
+            class="nav-link {% if request.endpoint in ['issue', 'return_book'] %}active{% endif %}"
+            href="{{ url_for('issue') }}"
+            ><span>04</span> Issue &amp; return</a
+          >
+        </nav>
+        <div class="sidebar-foot">
+          LIBRARY MANAGEMENT<br /><span>Simple records, in one place.</span>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <span>COLLECTION MANAGEMENT</span>
+          <span class="today-label">LOCAL LIBRARY</span>
+        </header>
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div class="flash-list" aria-live="polite">
+          {% for category, message in messages %}
+          <p class="flash flash-{{ category }}">{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %} {% endwith %} {% block content %}{% endblock %}
+        <footer class="page-footer">
+          SHELF LIBRARY DESK <span>·</span> BUILT FOR EVERYDAY USE
+        </footer>
+      </main>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+  </body>
+</html>

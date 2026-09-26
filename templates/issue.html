@@ -1,0 +1,109 @@
+{% extends "base.html" %} {% block title %}Issue & Return | Shelf{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">CIRCULATION DESK</p>
+    <h1>Issue &amp; return</h1>
+    <p class="muted">
+      Connect an available book to a member, or record a return.
+    </p>
+  </div>
+</section>
+<section class="content-grid loan-grid">
+  <section class="panel form-panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">CHECK OUT</p>
+        <h2>Issue a book</h2>
+      </div>
+      <span class="panel-index">01</span>
+    </div>
+    {% if not members %}
+    <div class="empty-notice">
+      Add a member before issuing a book.
+      <a href="{{ url_for('members') }}">Go to members</a>
+    </div>
+    {% elif not available_books %}
+    <div class="empty-notice">
+      There are no available books to issue.
+      <a href="{{ url_for('books') }}">Go to books</a>
+    </div>
+    {% else %}
+    <form method="post" class="stack-form">
+      <label for="member-select">Member</label>
+      <select id="member-select" name="member_id" required>
+        <option value="">Choose a member</option>
+        {% for member in members %}
+        <option value="{{ member.id }}">
+          MB-{{ "%03d"|format(member.id) }} · {{ member.name }}
+        </option>
+        {% endfor %}
+      </select>
+      <label for="book-select">Available book</label>
+      <select id="book-select" name="book_id" required>
+        <option value="">Choose a book</option>
+        {% for book in available_books %}
+        <option value="{{ book.id }}">
+          BK-{{ "%03d"|format(book.id) }} · {{ book.name }} — {{ book.author }}
+        </option>
+        {% endfor %}
+      </select>
+      <button class="button" type="submit">
+        Issue selected book <span aria-hidden="true">-&gt;</span>
+      </button>
+    </form>
+    {% endif %}
+  </section>
+  <section class="panel table-panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">ON LOAN</p>
+        <h2>
+          Issued books <span class="count-pill">{{ issued_books|length }}</span>
+        </h2>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Book</th>
+            <th>Member</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for book in issued_books %}
+          <tr>
+            <td>
+              <span class="name-cell">{{ book.name }}</span
+              ><small class="table-detail"
+                >BK-{{ "%03d"|format(book.id) }} · {{ book.author }}</small
+              >
+            </td>
+            <td>{{ book.member_name }}</td>
+            <td class="action-cell">
+              <form
+                method="post"
+                action="{{ url_for('return_book', book_id=book.id) }}"
+                data-confirm="Return this book to the library?"
+              >
+                <button class="button button-return" type="submit">
+                  Return
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td class="empty-cell" colspan="3">
+              No books are currently issued.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>
+{% endblock %}
