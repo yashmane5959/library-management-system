@@ -80,16 +80,16 @@ content %}
             <td class="name-cell">{{ book.name }}</td>
             <td>{{ book.author }}</td>
             <td>
-              <span class="status status-{{ book.status|lower }}"
-                >{{ book.status }}</span
-              >
+              <span class="status status-{{ book.status|lower }}">
+                {{ book.status }}
+              </span>
             </td>
           </tr>
           {% else %}
           <tr>
             <td class="empty-cell" colspan="4">
-              {% if search %}No books match that search.{% else %}No books yet.
-              Add the first one using the form.{% endif %}
+              {% if search %} No books match that search. {% else %} No books
+              yet. Add the first one using the form. {% endif %}
             </td>
           </tr>
           {% endfor %}

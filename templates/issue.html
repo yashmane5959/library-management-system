@@ -76,10 +76,10 @@
           {% for book in issued_books %}
           <tr>
             <td>
-              <span class="name-cell">{{ book.name }}</span
-              ><small class="table-detail"
-                >BK-{{ "%03d"|format(book.id) }} · {{ book.author }}</small
-              >
+              <span class="name-cell">{{ book.name }}</span>
+              <small class="table-detail">
+                BK-{{ "%03d"|format(book.id) }} · {{ book.author }}
+              </small>
             </td>
             <td>{{ book.member_name }}</td>
             <td class="action-cell">
